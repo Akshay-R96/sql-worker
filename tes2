@@ -1,0 +1,370 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test1              |
+| warehouse          |
+| workers            |
++--------------------+
+7 rows in set (0.03 sec)
+
+mysql> select workers;
+ERROR 1054 (42S22): Unknown column 'workers' in 'field list'
+mysql> use workers;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from workers;
+ERROR 1146 (42S02): Table 'workers.workers' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_workers |
++-------------------+
+| Bonus             |
+| Title             |
+| Worker            |
++-------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Title;
++---------------+---------------+---------------+
+| WORKER_REF_ID | WORKER_TITLE  | AFFECTED_FROM |
++---------------+---------------+---------------+
+|             1 | Manager       | 2016-02-20    |
+|             2 | Executive     | 2016-06-11    |
+|             8 | Executive     | 2016-06-11    |
+|             5 | Manager       | 2016-06-11    |
+|             4 | Asst. Manager | 2016-06-11    |
+|             7 | Executive     | 2016-06-11    |
+|             6 | Lead          | 2016-06-11    |
+|             3 | Lead          | 2016-06-11    |
++---------------+---------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from Bonus;
++---------------+--------------+------------+
+| WORKER_REF_ID | BONUS_AMOUNT | BONUS_DATE |
++---------------+--------------+------------+
+|             1 |         5000 | 2016-02-20 |
+|             2 |         3000 | 2016-06-11 |
+|             3 |         4000 | 2016-02-20 |
+|             1 |         4500 | 2016-02-20 |
+|             2 |         3500 | 2016-06-11 |
++---------------+--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from bonus;
++---------------+--------------+------------+
+| WORKER_REF_ID | BONUS_AMOUNT | BONUS_DATE |
++---------------+--------------+------------+
+|             1 |         5000 | 2016-02-20 |
+|             2 |         3000 | 2016-06-11 |
+|             3 |         4000 | 2016-02-20 |
+|             1 |         4500 | 2016-02-20 |
+|             2 |         3500 | 2016-06-11 |
++---------------+--------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select first_name as worker_name from worker;
++-------------+
+| worker_name |
++-------------+
+| Monika      |
+| Niharika    |
+| Vishal      |
+| Amitabh     |
+| Vivek       |
+| Vipul       |
+| Satish      |
+| Geetika     |
++-------------+
+8 rows in set (0.00 sec)
+
+mysql> select upper(first_name) as upper from worker;
++----------+
+| upper    |
++----------+
+| MONIKA   |
+| NIHARIKA |
+| VISHAL   |
+| AMITABH  |
+| VIVEK    |
+| VIPUL    |
+| SATISH   |
+| GEETIKA  |
++----------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct department from worker;
++------------+
+| department |
++------------+
+| HR         |
+| Admin      |
+| Account    |
++------------+
+3 rows in set (0.01 sec)
+
+mysql> select left(first_name,3) from worker;
++--------------------+
+| left(first_name,3) |
++--------------------+
+| Mon                |
+| Nih                |
+| Vis                |
+| Ami                |
+| Viv                |
+| Vip                |
+| Sat                |
+| Gee                |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct length(department) from worker;
++--------------------+
+| length(department) |
++--------------------+
+|                  2 |
+|                  5 |
+|                  7 |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct department, length(department) from worker;
++------------+--------------------+
+| department | length(department) |
++------------+--------------------+
+| HR         |                  2 |
+| Admin      |                  5 |
+| Account    |                  7 |
++------------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> select rtrim(first_name) from worker;
++-------------------+
+| rtrim(first_name) |
++-------------------+
+| Monika            |
+| Niharika          |
+| Vishal            |
+| Amitabh           |
+| Vivek             |
+| Vipul             |
+| Satish            |
+| Geetika           |
++-------------------+
+8 rows in set (0.00 sec)
+
+mysql> select concat(first_name,' ',last_name) as complete_name from worker;
++-----------------+
+| complete_name   |
++-----------------+
+| Monika Arora    |
+| Niharika Verma  |
+| Vishal Singhal  |
+| Amitabh Singh   |
+| Vivek Bhati     |
+| Vipul Diwan     |
+| Satish Kumar    |
+| Geetika Chauhan |
++-----------------+
+8 rows in set (0.01 sec)
+
+mysql> select * from worker order by first_name;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by first_name ASC;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+8 rows in set (0.00 sec)
+
+
+mysql> select * from worker order by first_name DESC;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by DEPARTMENT  DESC;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
++-----------+------------+-----------+--------+--------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from worker order by DEPARTMENT  DESC, FIRST_NAME ASC;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
++-----------+------------+-----------+--------+--------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> Select * from worker where first_name="vipul";
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         6 | Vipul      | Diwan     | 200000 | 2014-06-11   | Account    |
++-----------+------------+-----------+--------+--------------+------------+
+1 row in set (0.00 sec)
+
+
+mysql> Select * from worker where first_name!="Vipul" and first_name!="satish";
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from worker where department="admin";
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         2 | Niharika   | Verma     |  80000 | 2014-06-11   | Admin      |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
+|         5 | Vivek      | Bhati     | 500000 | 2014-06-11   | Admin      |
+|         8 | Geetika    | Chauhan   |  90000 | 2014-04-11   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select first_name from worker where first_name like ('%A%');
++------------+
+| first_name |
++------------+
+| Monika     |
+| Niharika   |
+| Vishal     |
+| Amitabh    |
+| Satish     |
+| Geetika    |
++------------+
+6 rows in set (0.00 sec)
+
+mysql> select first_name from worker where first_name like ('%A');
++------------+
+| first_name |
++------------+
+| Monika     |
+| Niharika   |
+| Geetika    |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> select first_name from worker where first_name like ('%h') and length(first_name)=6;
++------------+
+| first_name |
++------------+
+| Satish     |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from worker where first_name like ('%h') and length(first_name)=6;
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         7 | Satish     | Kumar     |  75000 | 2014-01-20   | Account    |
++-----------+------------+-----------+--------+--------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from worker where joining_date>'2014-02-01' and joining_date<'2014-02-28';
++-----------+------------+-----------+--------+--------------+------------+
+| WORKER_ID | FIRST_NAME | LAST_NAME | SALARY | JOINING_DATE | DEPARTMENT |
++-----------+------------+-----------+--------+--------------+------------+
+|         1 | Monika     | Arora     | 100000 | 2014-02-20   | HR         |
+|         3 | Vishal     | Singhal   | 300000 | 2014-02-20   | HR         |
+|         4 | Amitabh    | Singh     | 500000 | 2014-02-20   | Admin      |
++-----------+------------+-----------+--------+--------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select count(department) from worker where department="admin";
++-------------------+
+| count(department) |
++-------------------+
+|                 4 |
++-------------------+
+1 row in set (0.01 sec)
+
+mysql> select count(department) from worker where department="admin";
++-------------------+
+| count(department) |
++-------------------+
+|                 4 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(department) from worker order by department desc;
++-------------------+
+| count(department) |
++-------------------+
+|                 8 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select department,count(*) from worker group by department order by department desc;
++------------+----------+
+| department | count(*) |
++------------+----------+
+| HR         |        2 |
+| Admin      |        4 |
+| Account    |        2 |
++------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> 
